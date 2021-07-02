@@ -163,7 +163,7 @@ typings/
 
 
 # Jetbrains:
-%.idea
+.idea
 
 # CMake
 cmake-build-debug/
