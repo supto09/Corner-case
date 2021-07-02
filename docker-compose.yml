@@ -3,6 +3,7 @@ version: '3'
 volumes:
   local_postgres_data: { }
   local_postgres_data_backups: { }
+  local_pgadmin_data: { }
 
 services:
   django:
@@ -34,3 +35,16 @@ services:
     env_file:
       - ./.envs/.local/.postgres
 
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - postgres
+    ports:
+      - "53603:53603"
+      - "8001:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: 123456
+    volumes:
+      - local_pgadmin_data:/var/lib/pgadmin
