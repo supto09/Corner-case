@@ -7,6 +7,7 @@ from corner_case.users.models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
+        fields = ['id', 'email', 'type', 'is_active']
 
 
 class AuthTokenSerializer(serializers.Serializer):
