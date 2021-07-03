@@ -1,4 +1,6 @@
-from rest_framework import status
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiResponse, OpenApiParameter, OpenApiExample, inline_serializer
+from rest_framework import status, serializers
 from rest_framework.authtoken.models import Token
 from rest_framework.compat import coreapi, coreschema
 from rest_framework.generics import CreateAPIView
@@ -13,30 +15,6 @@ from corner_case.users.models import User
 
 class LoginView(APIView):
     serializer_class = AuthTokenSerializer
-    if coreapi is not None and coreschema is not None:
-        schema = ManualSchema(
-            fields=[
-                coreapi.Field(
-                    name="email",
-                    required=True,
-                    location='form',
-                    schema=coreschema.String(
-                        title="Email",
-                        description="Valid email for authentication",
-                    ),
-                ),
-                coreapi.Field(
-                    name="password",
-                    required=True,
-                    location='form',
-                    schema=coreschema.String(
-                        title="Password",
-                        description="Valid password for authentication",
-                    ),
-                ),
-            ],
-            encoding="application/json",
-        )
 
     def get_serializer_context(self):
         return {
@@ -49,6 +27,23 @@ class LoginView(APIView):
         kwargs['context'] = self.get_serializer_context()
         return self.serializer_class(*args, **kwargs)
 
+    @extend_schema(
+        responses={
+            200: OpenApiTypes.OBJECT,
+        },
+        examples=[
+            OpenApiExample(
+                "Login Success",
+                description="Login Success",
+                value={
+                    "token": "5178572c4a50f43e452fbdd6f97493cda9d79451",
+                    "user": {"id": 15, "email": "supto09apee@gmail.com", "type": "ADMIN"}
+                },
+                response_only=True,
+                status_codes=["200"],
+            ),
+        ],
+    )
     def post(self, request, *args, **kwargs):
         token_serializer = self.get_serializer(data=request.data)
         token_serializer.is_valid(raise_exception=True)
