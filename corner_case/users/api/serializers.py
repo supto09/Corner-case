@@ -17,6 +17,10 @@ class UserSerializer(serializers.ModelSerializer):
         user = super().create(validated_data)
         user.set_password(validated_data['password'])
         user.save()
+
+        if self.validated_data["type"] == User.Types.ADMIN:
+            user.admin = True
+
         return user
 
 
