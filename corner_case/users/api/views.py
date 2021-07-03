@@ -1,7 +1,8 @@
+from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.compat import coreapi, coreschema
 from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.schemas import ManualSchema
 from rest_framework.views import APIView
@@ -10,7 +11,7 @@ from corner_case.users.api.serializers import UserSerializer, AuthTokenSerialize
 from corner_case.users.models import User
 
 
-class ObtainAuthToken(APIView):
+class LoginView(APIView):
     serializer_class = AuthTokenSerializer
     if coreapi is not None and coreschema is not None:
         schema = ManualSchema(
@@ -60,6 +61,14 @@ class ObtainAuthToken(APIView):
                 'user': user_serialized_data.data
             }
         )
+
+
+class LogoutView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        request.user.auth_token.delete()
+        return Response({'message': "User logged out successfully"}, status=status.HTTP_200_OK)
 
 
 class CreateUserView(CreateAPIView):

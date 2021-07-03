@@ -13,6 +13,12 @@ class UserSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
         extra_kwargs = {'type': {'required': True}}
 
+    def create(self, validated_data):
+        user = super().create(validated_data)
+        user.set_password(validated_data['password'])
+        user.save()
+        return user
+
 
 class AuthTokenSerializer(serializers.Serializer):
     email = serializers.EmailField(label="Email")
