@@ -67,8 +67,11 @@ class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        request.user.auth_token.delete()
-        return Response({'message': "User logged out successfully"}, status=status.HTTP_200_OK)
+        try:
+            request.user.auth_token.delete()
+            return Response({'message': "User logged out successfully"}, status=status.HTTP_200_OK)
+        except:
+            return Response({'message': "Invalid token provided"}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class CreateUserView(CreateAPIView):
