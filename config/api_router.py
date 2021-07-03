@@ -11,5 +11,5 @@ app_name = "api"
 urlpatterns = router.urls
 
 urlpatterns += [
-    path("login", include("corner_case.users.api.urls")),
+    path("users", include("corner_case.users.api.urls")),
 ]

@@ -5,9 +5,13 @@ from corner_case.users.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(max_length=30, write_only=True)
+
     class Meta:
         model = User
-        fields = ['id', 'email', 'type', 'is_active']
+        fields = ['id', 'email', 'type', 'password']
+        read_only_fields = ['id']
+        extra_kwargs = {'type': {'required': True}}
 
 
 class AuthTokenSerializer(serializers.Serializer):
