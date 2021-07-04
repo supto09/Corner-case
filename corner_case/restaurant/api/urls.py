@@ -5,5 +5,5 @@ from corner_case.restaurant.api.views import RestaurantListCreateApiView, Restau
 app_name = "restaurants"
 urlpatterns = [
     path('', RestaurantListCreateApiView.as_view()),
-    path('<int:id>', RestaurantRetrieveDestroyApiView.as_view()),
+    path('/<int:id>', RestaurantRetrieveDestroyApiView.as_view()),
 ]

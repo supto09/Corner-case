@@ -3,6 +3,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from corner_case.restaurant.api.serializers import RestaurantSerializer
+from corner_case.restaurant.models import Restaurant
 from corner_case.utils.permission_helper import IsAdminOrAuthenticatedReadOnly
 
 
@@ -15,6 +16,8 @@ class RestaurantListCreateApiView(ListCreateAPIView):
     permission_classes = (IsAdminOrAuthenticatedReadOnly,)
     serializer_class = RestaurantSerializer
 
+    queryset = Restaurant.objects.all()
+
 
 @extend_schema_view(
     get=extend_schema(summary="Retrieve", ),
@@ -26,3 +29,7 @@ class RestaurantRetrieveDestroyApiView(RetrieveUpdateDestroyAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAdminOrAuthenticatedReadOnly,)
     serializer_class = RestaurantSerializer
+
+    queryset = Restaurant.objects.all()
+    lookup_field = "id"
+    lookup_url_kwarg = "id"
