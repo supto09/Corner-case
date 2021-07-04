@@ -48,7 +48,6 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     class Types(models.TextChoices):
-        RESTAURANT = "RESTAURANT", "Restaurant"
         EMPLOYEE = "EMPLOYEE", "Employee"
         ADMIN = "ADMIN", "Admin"
 
