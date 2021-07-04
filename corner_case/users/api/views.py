@@ -1,7 +1,8 @@
 from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -32,6 +33,8 @@ from corner_case.users.models import User
         ], )
 )
 class LoginView(APIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (AllowAny,)
     serializer_class = AuthTokenSerializer
 
     def get_serializer_context(self):
@@ -76,6 +79,7 @@ class LoginView(APIView):
         ], )
 )
 class LogoutView(APIView):
+    authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
@@ -84,9 +88,10 @@ class LogoutView(APIView):
 
 
 @extend_schema_view(
-    post=extend_schema(summary="Create User", )
+    post=extend_schema(summary="Create User", description="Admin authorized only")
 )
 class CreateUserView(CreateAPIView):
+    authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAdminUser,)
     serializer_class = UserSerializer
     queryset = User.objects.all()
