@@ -1,33 +1,20 @@
-from drf_spectacular.types import OpenApiTypes
-from drf_spectacular.utils import extend_schema, OpenApiResponse, OpenApiParameter, OpenApiExample, inline_serializer
-from rest_framework import status, serializers
+from rest_framework import status
 from rest_framework.authtoken.models import Token
-from rest_framework.compat import coreapi, coreschema
 from rest_framework.generics import CreateAPIView
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.schemas import ManualSchema
 from rest_framework.views import APIView
+
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema, OpenApiExample, extend_schema_view
 
 from corner_case.users.api.serializers import UserSerializer, AuthTokenSerializer
 from corner_case.users.models import User
 
 
-class LoginView(APIView):
-    serializer_class = AuthTokenSerializer
-
-    def get_serializer_context(self):
-        return {
-            'request': self.request,
-            'format': self.format_kwarg,
-            'view': self
-        }
-
-    def get_serializer(self, *args, **kwargs):
-        kwargs['context'] = self.get_serializer_context()
-        return self.serializer_class(*args, **kwargs)
-
-    @extend_schema(
+@extend_schema_view(
+    post=extend_schema(
+        summary="Login",
         responses={
             200: OpenApiTypes.OBJECT,
         },
@@ -42,8 +29,22 @@ class LoginView(APIView):
                 response_only=True,
                 status_codes=["200"],
             ),
-        ],
-    )
+        ], )
+)
+class LoginView(APIView):
+    serializer_class = AuthTokenSerializer
+
+    def get_serializer_context(self):
+        return {
+            'request': self.request,
+            'format': self.format_kwarg,
+            'view': self
+        }
+
+    def get_serializer(self, *args, **kwargs):
+        kwargs['context'] = self.get_serializer_context()
+        return self.serializer_class(*args, **kwargs)
+
     def post(self, request, *args, **kwargs):
         token_serializer = self.get_serializer(data=request.data)
         token_serializer.is_valid(raise_exception=True)
@@ -58,6 +59,22 @@ class LoginView(APIView):
         )
 
 
+@extend_schema_view(
+    get=extend_schema(
+        summary="Logout",
+        responses={
+            200: OpenApiTypes.OBJECT,
+        },
+        examples=[
+            OpenApiExample(
+                "Logout Success",
+                description="Logout Success",
+                value={'message': "User logged out successfully"},
+                response_only=True,
+                status_codes=["200"],
+            ),
+        ], )
+)
 class LogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
@@ -66,6 +83,9 @@ class LogoutView(APIView):
         return Response({'message': "User logged out successfully"}, status=status.HTTP_200_OK)
 
 
+@extend_schema_view(
+    post=extend_schema(summary="Create User", )
+)
 class CreateUserView(CreateAPIView):
     permission_classes = (IsAdminUser,)
     serializer_class = UserSerializer
