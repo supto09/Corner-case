@@ -13,4 +13,5 @@ urlpatterns = router.urls
 urlpatterns += [
     path("users", include("corner_case.users.api.urls")),
     path("restaurants", include("corner_case.restaurant.api.urls")),
+    path("votes", include("corner_case.vote.api.urls")),
 ]
