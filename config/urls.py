@@ -24,10 +24,10 @@ urlpatterns += [
 # Api doc urls
 urlpatterns += [
     # YOUR PATTERNS
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
     # Optional UI:
-    path('api/apidoc/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('api/apidoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    path('apidoc/swagger/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('apidoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
 
 if settings.DEBUG:
