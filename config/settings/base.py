@@ -73,7 +73,8 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "corner_case.users.apps.UsersConfig",
-    "corner_case.restaurant.apps.UsersConfig",
+    "corner_case.restaurant.apps.RestaurantConfig",
+    "corner_case.vote.apps.VotesConfig",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

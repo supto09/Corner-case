@@ -10,11 +10,11 @@ class UserAdmin(admin.ModelAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'type')
-    list_filter = ('type',)
+    list_display = ("email", "type")
+    list_filter = ("type",)
 
-    search_fields = ('email',)
-    ordering = ('email',)
+    search_fields = ("email",)
+    ordering = ("email",)
     filter_horizontal = ()
 
     def get_form(self, request, obj=None, **kwargs):
