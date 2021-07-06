@@ -1,5 +1,8 @@
+import datetime
+
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema_view, extend_schema
 
 from corner_case.restaurant.api.serializers import RestaurantSerializer, MenuSerializer
@@ -58,3 +61,16 @@ class MenuRetrieveApiView(RetrieveAPIView):
     queryset = Menu.objects.all()
     lookup_field = "id"
     lookup_url_kwarg = "id"
+
+
+@extend_schema_view(
+    get=extend_schema(summary="List menu for current day"),
+)
+class MenuTodayListApiView(ListAPIView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+    serializer_class = MenuSerializer
+
+    def get_queryset(self):
+        today = datetime.date.today()
+        return Menu.objects.filter(date=today)
