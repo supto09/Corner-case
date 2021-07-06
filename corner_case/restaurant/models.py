@@ -6,3 +6,17 @@ class Restaurant(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Menu(models.Model):
+    restaurant = models.ForeignKey(Restaurant, blank=False, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, blank=False)
+    date = models.DateField(blank=False)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['restaurant_id', 'date'], name='same_day_menu')
+        ]
+
+    def __str__(self):
+        return self.name
