@@ -68,7 +68,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
-    'drf_spectacular',
+    "drf_spectacular",
 ]
 
 LOCAL_APPS = [
@@ -239,7 +239,7 @@ LOGGING = {
     "formatters": {
         "verbose": {
             "format": "%(levelname)s %(asctime)s %(module)s "
-                      "%(process)d %(thread)d %(message)s"
+            "%(process)d %(thread)d %(message)s"
         }
     },
     "handlers": {
@@ -260,7 +260,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
         "rest_framework.authentication.TokenAuthentication",
     ),
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 # django-cors-headers - https://github.com/adamchainz/django-cors-headers#setup
@@ -271,7 +271,7 @@ CORS_URLS_REGEX = r"^/api/.*$"
 
 # APi doc settings
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Corner case API',
-    'DESCRIPTION': 'Api documentation for Corner Case API',
-    'VERSION': '1.0.0',
+    "TITLE": "Corner case API",
+    "DESCRIPTION": "Api documentation for Corner Case API",
+    "VERSION": "1.0.0",
 }

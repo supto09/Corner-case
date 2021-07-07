@@ -9,12 +9,14 @@ class UserCreationForm(forms.ModelForm):
     fields, plus a repeated password.
     """
 
-    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
-    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+    password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
+    password2 = forms.CharField(
+        label="Password confirmation", widget=forms.PasswordInput
+    )
 
     class Meta:
         model = User
-        fields = ('email', 'type')
+        fields = ("email", "type")
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -40,12 +42,14 @@ class UserCreationForm(forms.ModelForm):
 
 
 class UserChangeForm(forms.ModelForm):
-    """A form for updating users.
-    """
+    """A form for updating users."""
 
     class Meta:
         model = User
-        fields = ('email', 'type',)
+        fields = (
+            "email",
+            "type",
+        )
 
     def save(self, commit=True):
         user = super(UserChangeForm, self).save(commit=False)

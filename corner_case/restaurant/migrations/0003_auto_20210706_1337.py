@@ -6,16 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('restaurant', '0002_auto_20210706_1312'),
+        ("restaurant", "0002_auto_20210706_1312"),
     ]
 
     operations = [
         migrations.RemoveConstraint(
-            model_name='menu',
-            name='same day menu',
+            model_name="menu",
+            name="same day menu",
         ),
         migrations.AddConstraint(
-            model_name='menu',
-            constraint=models.UniqueConstraint(fields=('restaurant', 'date'), name='same day menu'),
+            model_name="menu",
+            constraint=models.UniqueConstraint(
+                fields=("restaurant", "date"), name="same day menu"
+            ),
         ),
     ]

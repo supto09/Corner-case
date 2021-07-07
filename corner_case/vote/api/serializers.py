@@ -36,13 +36,15 @@ class VoteCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Already voted on this menu")
 
         if Vote.objects.filter(user=user, date=menu.date).exists():
-            raise serializers.ValidationError("Already voted on another menu for same day")
+            raise serializers.ValidationError(
+                "Already voted on another menu for same day"
+            )
 
         return attrs
 
     def create(self, validated_data):
         user = self.context["request"].user
-        menu_id = validated_data['menu_id']
+        menu_id = validated_data["menu_id"]
         menu = Menu.objects.get(id=menu_id)
 
         vote_instance = Vote.objects.create(user=user, menu=menu, date=menu.date)

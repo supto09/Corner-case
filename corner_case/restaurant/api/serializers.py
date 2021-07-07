@@ -27,15 +27,19 @@ class MenuSerializer(serializers.ModelSerializer):
 
     def validate_restaurant_id(self, value):
         if not Restaurant.objects.filter(id=value).exists():
-            raise serializers.ValidationError("No restaurant found with given restaurant id")
+            raise serializers.ValidationError(
+                "No restaurant found with given restaurant id"
+            )
 
         return value
 
     def validate(self, attrs):
-        restaurant_id = attrs['restaurant_id']
-        date = attrs['date']
+        restaurant_id = attrs["restaurant_id"]
+        date = attrs["date"]
 
         if Menu.objects.filter(restaurant_id=restaurant_id, date=date).exists():
-            raise serializers.ValidationError("There is an existing menu for the same date")
+            raise serializers.ValidationError(
+                "There is an existing menu for the same date"
+            )
 
         return attrs
