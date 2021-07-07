@@ -8,7 +8,7 @@ class UserManager(BaseUserManager):
         Creates and saves a User with the given email and password.
         """
         if not email:
-            raise ValueError('Users must have an email address')
+            raise ValueError("Users must have an email address")
 
         user = self.model(
             email=self.normalize_email(email),
@@ -57,7 +57,7 @@ class User(AbstractBaseUser):
 
     type = models.CharField(max_length=50, choices=Types.choices, default=base_type)
     email = models.EmailField(
-        verbose_name='email address',
+        verbose_name="email address",
         max_length=255,
         unique=True,
     )  # make email unique as we are going to use it as username field
@@ -67,7 +67,7 @@ class User(AbstractBaseUser):
     admin = models.BooleanField(default=False)  # a superuser
     # password field already there
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []  # Email & Password are required by default.
 
     def get_full_name(self):

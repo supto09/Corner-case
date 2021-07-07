@@ -1,7 +1,12 @@
 from django.urls import path
 
-from corner_case.restaurant.api.views import RestaurantListCreateApiView, RestaurantRetrieveDestroyApiView, \
-    MenuListCreateApiView, MenuRetrieveApiView, MenuTodayListApiView
+from corner_case.restaurant.api.views import (
+    RestaurantListCreateApiView,
+    RestaurantRetrieveDestroyApiView,
+    MenuListCreateApiView,
+    MenuRetrieveApiView,
+    MenuTodayListApiView,
+)
 
 app_name = "restaurants"
 urlpatterns = [

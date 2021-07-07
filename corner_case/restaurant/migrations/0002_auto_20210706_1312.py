@@ -7,21 +7,37 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('restaurant', '0001_initial'),
+        ("restaurant", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Menu',
+            name="Menu",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('date', models.DateField()),
-                ('restaurant', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='restaurant.restaurant')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                ("date", models.DateField()),
+                (
+                    "restaurant",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="restaurant.restaurant",
+                    ),
+                ),
             ],
         ),
         migrations.AddConstraint(
-            model_name='menu',
-            constraint=models.UniqueConstraint(fields=('restaurant_id', 'date'), name='same day menu'),
+            model_name="menu",
+            constraint=models.UniqueConstraint(
+                fields=("restaurant_id", "date"), name="same day menu"
+            ),
         ),
     ]

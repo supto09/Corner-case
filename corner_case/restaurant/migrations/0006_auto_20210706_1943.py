@@ -7,19 +7,21 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('restaurant', '0005_auto_20210706_1455'),
+        ("restaurant", "0005_auto_20210706_1455"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='menu',
-            name='created_at',
-            field=models.DateTimeField(auto_now_add=True, default=django.utils.timezone.now),
+            model_name="menu",
+            name="created_at",
+            field=models.DateTimeField(
+                auto_now_add=True, default=django.utils.timezone.now
+            ),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='menu',
-            name='updated_at',
+            model_name="menu",
+            name="updated_at",
             field=models.DateTimeField(auto_now=True),
         ),
     ]

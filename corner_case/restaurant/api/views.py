@@ -1,7 +1,12 @@
 import datetime
 
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, RetrieveAPIView, ListAPIView
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+    RetrieveAPIView,
+    ListAPIView,
+)
 from rest_framework.permissions import IsAuthenticated
 from drf_spectacular.utils import extend_schema_view, extend_schema
 
@@ -11,7 +16,7 @@ from corner_case.utils.permission_helper import IsAdminOrAuthenticatedReadOnly
 
 
 @extend_schema_view(
-    get=extend_schema(summary="List", ),
+    get=extend_schema(summary="List"),
     post=extend_schema(summary="Create", description="Admin authorized only"),
 )
 class RestaurantListCreateApiView(ListCreateAPIView):
@@ -23,7 +28,7 @@ class RestaurantListCreateApiView(ListCreateAPIView):
 
 
 @extend_schema_view(
-    get=extend_schema(summary="Retrieve", ),
+    get=extend_schema(summary="Retrieve"),
     put=extend_schema(summary="Update", description="Admin authorized only"),
     patch=extend_schema(summary="Partial Update", description="Admin authorized only"),
     delete=extend_schema(summary="Delete", description="Admin authorized only"),
@@ -39,7 +44,7 @@ class RestaurantRetrieveDestroyApiView(RetrieveUpdateDestroyAPIView):
 
 
 @extend_schema_view(
-    get=extend_schema(summary="List Menu", ),
+    get=extend_schema(summary="List Menu"),
     post=extend_schema(summary="Create Menu", description="Admin authorized only"),
 )
 class MenuListCreateApiView(ListCreateAPIView):
@@ -50,9 +55,7 @@ class MenuListCreateApiView(ListCreateAPIView):
     queryset = Menu.objects.all()
 
 
-@extend_schema_view(
-    get=extend_schema(summary="Menu retrieve"),
-)
+@extend_schema_view(get=extend_schema(summary="Menu retrieve"))
 class MenuRetrieveApiView(RetrieveAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAdminOrAuthenticatedReadOnly,)
@@ -63,9 +66,7 @@ class MenuRetrieveApiView(RetrieveAPIView):
     lookup_url_kwarg = "id"
 
 
-@extend_schema_view(
-    get=extend_schema(summary="List menu for current day"),
-)
+@extend_schema_view(get=extend_schema(summary="List menu for current day"))
 class MenuTodayListApiView(ListAPIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)

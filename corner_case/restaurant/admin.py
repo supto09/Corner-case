@@ -9,7 +9,10 @@ class RestaurantAdmin(admin.ModelAdmin):
     list_display = ("id", "name")
 
     search_fields = ("name",)
-    ordering = ("id", "name",)
+    ordering = (
+        "id",
+        "name",
+    )
     filter_horizontal = ()
 
 
@@ -19,5 +22,9 @@ class RestaurantAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "date", "restaurant")
 
     search_fields = ("name",)
-    ordering = ("id", "name", "date")
+    ordering = (
+        "id",
+        "name",
+        "date",
+    )
     filter_horizontal = ()

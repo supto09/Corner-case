@@ -25,12 +25,17 @@ from corner_case.users.models import User
                 description="Login Success",
                 value={
                     "token": "5178572c4a50f43e452fbdd6f97493cda9d79451",
-                    "user": {"id": 15, "email": "supto09apee@gmail.com", "type": "ADMIN"}
+                    "user": {
+                        "id": 15,
+                        "email": "supto09apee@gmail.com",
+                        "type": "ADMIN",
+                    },
                 },
                 response_only=True,
                 status_codes=["200"],
             ),
-        ], )
+        ],
+    )
 )
 class LoginView(APIView):
     authentication_classes = (TokenAuthentication,)
@@ -38,28 +43,19 @@ class LoginView(APIView):
     serializer_class = AuthTokenSerializer
 
     def get_serializer_context(self):
-        return {
-            'request': self.request,
-            'format': self.format_kwarg,
-            'view': self
-        }
+        return {"request": self.request, "format": self.format_kwarg, "view": self}
 
     def get_serializer(self, *args, **kwargs):
-        kwargs['context'] = self.get_serializer_context()
+        kwargs["context"] = self.get_serializer_context()
         return self.serializer_class(*args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         token_serializer = self.get_serializer(data=request.data)
         token_serializer.is_valid(raise_exception=True)
-        user = token_serializer.validated_data['user']
+        user = token_serializer.validated_data["user"]
         token, created = Token.objects.get_or_create(user=user)
-        user_serialized_data = UserSerializer(user, context={'request': request})
-        return Response(
-            {
-                'token': token.key,
-                'user': user_serialized_data.data
-            }
-        )
+        user_serialized_data = UserSerializer(user, context={"request": request})
+        return Response({"token": token.key, "user": user_serialized_data.data})
 
 
 @extend_schema_view(
@@ -72,11 +68,12 @@ class LoginView(APIView):
             OpenApiExample(
                 "Logout Success",
                 description="Logout Success",
-                value={'message': "User logged out successfully"},
+                value={"message": "User logged out successfully"},
                 response_only=True,
                 status_codes=["200"],
             ),
-        ], )
+        ],
+    )
 )
 class LogoutView(APIView):
     authentication_classes = (TokenAuthentication,)
@@ -84,7 +81,9 @@ class LogoutView(APIView):
 
     def get(self, request):
         request.user.auth_token.delete()
-        return Response({'message': "User logged out successfully"}, status=status.HTTP_200_OK)
+        return Response(
+            {"message": "User logged out successfully"}, status=status.HTTP_200_OK
+        )
 
 
 @extend_schema_view(
