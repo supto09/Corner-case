@@ -1,1 +1,14 @@
 {% extends "base.html" %}
+
+{% block content %}
+
+  <h1>Visit Api Documentation</h1>
+  <div class="list-group">
+    <a href="{% url 'redoc' %}" class="list-group-item list-group-item-action ">
+      ReDoc
+    </a>
+    <a href="{% url 'swagger-ui' %}" class="list-group-item list-group-item-action">
+      Swagger
+    </a>
+  </div>
+{% endblock content %}
